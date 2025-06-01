@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacktahin Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .container { max-width: 500px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
+        h2 { text-align: center; color: #333; }
+        label { display: block; margin-top: 15px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .btn-group { margin-top: 20px; display: flex; justify-content: space-between; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-submit { background: #007bff; color: #fff; }
+        .btn-reset { background: #dc3545; color: #fff; }
+        .result { background: #e9ffe9; padding: 15px; border-radius: 6px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Hacktahin Registration</h2>
+        <form method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required value="{{ name if submitted else '' }}">
+
+            <label for="email">Email ID:</label>
+            <input type="email" id="email" name="email" required value="{{ email if submitted else '' }}">
+
+            <label for="institute">Institute/University Name:</label>
+            <input type="text" id="institute" name="institute" required value="{{ institute if submitted else '' }}">
+
+            <label for="branch">Engineering Branch:</label>
+            <input type="text" id="branch" name="branch" required value="{{ branch if submitted else '' }}">
+
+            <label for="year">Year:</label>
+            <select id="year" name="year" required>
+                <option value="">--Select--</option>
+                <option value="First" {% if submitted and year == 'First' %}selected{% endif %}>First</option>
+                <option value="Second" {% if submitted and year == 'Second' %}selected{% endif %}>Second</option>
+                <option value="Third" {% if submitted and year == 'Third' %}selected{% endif %}>Third</option>
+                <option value="Final" {% if submitted and year == 'Final' %}selected{% endif %}>Final</option>
+            </select>
+
+            <label for="problem">Select Problem Statement:</label>
+            <select id="problem" name="problem" required>
+                <option value="">--Select--</option>
+                {% for p in problem_statements %}
+                <option value="{{ p }}" {% if submitted and problem == p %}selected{% endif %}>{{ p }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-submit" name="submit">Submit</button>
+                <button type="submit" class="btn btn-reset" name="reset">Reset</button>
+            </div>
+        </form>
+
+        {% if submitted %}
+        <div class="result">
+            <h3>Registration Details</h3>
+            <p><strong>Name:</strong> {{ name }}</p>
+            <p><strong>Email ID:</strong> {{ email }}</p>
+            <p><strong>Institute/University:</strong> {{ institute }}</p>
+            <p><strong>Engineering Branch:</strong> {{ branch }}</p>
+            <p><strong>Year:</strong> {{ year }}</p>
+            <p><strong>Selected Problem Statement:</strong> {{ problem }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
